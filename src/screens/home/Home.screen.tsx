@@ -70,7 +70,10 @@ export const HomeScreen = () => {
 				}
 				contentContainerClassName={isEmpty ? "flex-grow" : "pb-28"}
 			/>
-			<FloatingButton onPress={() => {}} />
+			<FloatingButton
+				accessibilityLabel="Utwórz listę"
+				onPress={() => router.push("/create-list")}
+			/>
 		</SafeAreaView>
 	);
 };

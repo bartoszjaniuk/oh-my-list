@@ -18,9 +18,11 @@ import { formatItemsCountMessage } from "../utils/listCardFormat";
 /**
  * Soft type surfaces from the compact list reference (pastel squares).
  * Not theme tokens — closest Tailwind tints until type colors land in DS.
+ * `other` + unknown types use muted; legacy types keep their previous tints.
  */
 const LIST_TYPE_SURFACE: Record<string, string> = {
 	shopping: "bg-emerald-100",
+	other: "bg-muted",
 	media: "bg-pink-100",
 	movies: "bg-pink-100",
 	books: "bg-amber-100",
@@ -30,6 +32,7 @@ const LIST_TYPE_SURFACE: Record<string, string> = {
 
 const LIST_TYPE_ICON: Record<string, LucideIcon> = {
 	shopping: ShoppingCart,
+	other: List,
 	media: Film,
 	movies: Film,
 	books: BookOpen,

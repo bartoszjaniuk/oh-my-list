@@ -80,8 +80,8 @@ export type ErrorResponse = {
 
 export type CreateListInput = {
 	name: string;
-	/** Typ zgodny z Edge Function — "movies" (nie "media") */
-	type: "shopping" | "movies" | "books" | "travel" | "gifts";
+	/** MVP: spożywcza / inne. Backend `other` może jeszcze nie akceptować. */
+	type: "shopping" | "other";
 };
 
 /** Body PATCH /lists/:id — zgodny z PatchListNameBodySchema (Edge Function). */

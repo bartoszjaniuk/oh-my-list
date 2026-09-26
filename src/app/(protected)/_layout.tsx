@@ -10,6 +10,7 @@ const ProtectedLayout = () => {
 	return (
 		<Stack screenOptions={{ headerShown: false }}>
 			<Stack.Screen name="index" />
+			<Stack.Screen name="create-list" />
 			<Stack.Screen name="settings" />
 			<Stack.Screen name="design-system" />
 		</Stack>

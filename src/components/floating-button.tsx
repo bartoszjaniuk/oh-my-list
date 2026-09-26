@@ -17,9 +17,13 @@ const TAB_BAR_OFFSET = 64;
 
 type FloatingButtonProps = {
 	onPress?: () => void;
+	accessibilityLabel?: string;
 };
 
-export function FloatingButton({ onPress }: FloatingButtonProps) {
+export function FloatingButton({
+	onPress,
+	accessibilityLabel = "Dodaj",
+}: FloatingButtonProps) {
 	const insets = useSafeAreaInsets();
 	const { colorScheme } = useColorScheme();
 	const theme = THEME[colorScheme === "dark" ? "dark" : "light"];
@@ -36,7 +40,7 @@ export function FloatingButton({ onPress }: FloatingButtonProps) {
 		>
 			<Pressable
 				accessibilityRole="button"
-				accessibilityLabel="Dodaj"
+				accessibilityLabel={accessibilityLabel}
 				onPress={onPress}
 				className="active:opacity-90"
 			>
