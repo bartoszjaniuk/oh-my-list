@@ -1,7 +1,7 @@
+import type { ListSummary } from "@/api/lists/lists.models";
 import { FloatingButton } from "@/components/floating-button";
 import { IconButton } from "@/components/ui/icon-button";
 import { Text } from "@/components/ui/text";
-import type { ListSummary } from "@/api/lists/lists.models";
 import { router } from "expo-router";
 import { Settings } from "lucide-react-native";
 import { FlatList, RefreshControl, View } from "react-native";
@@ -13,7 +13,7 @@ import { useListsScreen } from "./hooks/useListsScreen";
 
 function Header() {
 	return (
-		<View className="min-h-32 gap-4 border-b border-border p-2">
+		<View className="min-h-32 gap-4 p-4">
 			<View className="items-end">
 				<IconButton
 					as={Settings}
@@ -68,9 +68,7 @@ export const HomeScreen = () => {
 						onRefresh={refetch}
 					/>
 				}
-				contentContainerClassName={
-					isEmpty ? "flex-grow" : "gap-3 px-4 py-4 pb-28"
-				}
+				contentContainerClassName={isEmpty ? "flex-grow" : "pb-28"}
 			/>
 			<FloatingButton onPress={() => {}} />
 		</SafeAreaView>

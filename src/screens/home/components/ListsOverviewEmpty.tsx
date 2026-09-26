@@ -14,12 +14,11 @@ type ListsOverviewEmptyProps = {
 
 function ListCardSkeleton() {
 	return (
-		<View className="flex-row items-center gap-3 rounded-xl border border-border bg-card p-4">
-			<Skeleton className="h-12 w-12 rounded-full" />
-			<View className="min-w-0 flex-1 gap-2">
-				<Skeleton className="h-4 w-3/4" />
-				<Skeleton className="h-3 w-1/2" />
-				<Skeleton className="h-3 w-2/3" />
+		<View className="flex-row items-center gap-3 border-b border-border px-4 py-3">
+			<Skeleton className="h-11 w-11 rounded-2xl" />
+			<View className="min-w-0 flex-1 gap-1.5">
+				<Skeleton className="h-4 w-[75%]" />
+				<Skeleton className="h-3 w-[40%]" />
 			</View>
 		</View>
 	);
@@ -34,7 +33,7 @@ export function ListsOverviewEmpty({
 }: ListsOverviewEmptyProps) {
 	if (isLoading) {
 		return (
-			<View className="gap-3 px-4 py-4">
+			<View>
 				<ListCardSkeleton />
 				<ListCardSkeleton />
 				<ListCardSkeleton />

@@ -15,7 +15,7 @@ const TABS: { scope: ListScope; label: string }[] = [
 
 export function ListScopeTabs({ value, onChange }: ListScopeTabsProps) {
 	return (
-		<View accessibilityRole="tablist" className="flex-row border-b border-border">
+		<View accessibilityRole="tablist" className="flex-row pb-2">
 			{TABS.map(({ scope, label }) => {
 				const selected = value === scope;
 				return (

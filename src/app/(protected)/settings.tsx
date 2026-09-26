@@ -14,9 +14,8 @@ export default function SettingsScreen() {
 			<Stack.Screen
 				options={{
 					headerShown: true,
-					headerTitle: "Settings",
+					title: "Ustawienia",
 					headerLeft: () => <GoBackButton />,
-					headerRight: () => <Text>Settings</Text>,
 				}}
 			/>
 			<BodyScrollView>
