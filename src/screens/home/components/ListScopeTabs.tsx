@@ -25,7 +25,7 @@ export function ListScopeTabs({ value, onChange }: ListScopeTabsProps) {
 						accessibilityState={{ selected }}
 						accessibilityLabel={label}
 						onPress={() => onChange(scope)}
-						className="min-h-11 flex-1 items-center justify-center"
+						className="px-4 relative min-h-11 flex-1 items-center justify-center"
 					>
 						<Text
 							className={cn(
@@ -39,7 +39,7 @@ export function ListScopeTabs({ value, onChange }: ListScopeTabsProps) {
 						</Text>
 						<View
 							className={cn(
-								"absolute bottom-0 h-1 w-full rounded-full",
+								"absolute bottom-0 h-[2px] w-full rounded-full",
 								selected ? "bg-primary" : "bg-transparent",
 							)}
 						/>

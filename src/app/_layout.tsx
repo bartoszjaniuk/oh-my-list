@@ -1,6 +1,12 @@
 import AppProviders from "@/providers/AppProviders";
 import { supabase } from "@/utils/supabase/client";
 import { PortalHost } from "@rn-primitives/portal";
+import {
+	Lora_400Regular,
+	Lora_500Medium,
+	Lora_600SemiBold,
+	Lora_700Bold,
+} from "@expo-google-fonts/lora";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -22,6 +28,10 @@ export default function RootLayout() {
 		"CabinetGrotesk-Bold": require("@/assets/fonts/OTF/CabinetGrotesk-Bold.otf"),
 		"CabinetGrotesk-Extrabold": require("@/assets/fonts/OTF/CabinetGrotesk-Extrabold.otf"),
 		"CabinetGrotesk-Black": require("@/assets/fonts/OTF/CabinetGrotesk-Black.otf"),
+		Lora_400Regular,
+		Lora_500Medium,
+		Lora_600SemiBold,
+		Lora_700Bold,
 	});
 
 	useEffect(() => {

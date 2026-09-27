@@ -1,6 +1,5 @@
 import { useCreateListMutation } from "@/api/lists/hooks/useCreateListMutation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { router } from "expo-router";
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -9,15 +8,15 @@ import {
 	type CreateListFormValues,
 } from "../createList.schema";
 
-export function useCreateListScreen() {
+type UseCreateListOptions = {
+	onCreated: () => void;
+};
+
+export function useCreateList({ onCreated }: UseCreateListOptions) {
 	const [createError, setCreateError] = useState<string | null>(null);
 	const { mutateAsync, isPending: isCreating } = useCreateListMutation();
 
-	const form = useForm<
-		CreateListFormInput,
-		unknown,
-		CreateListFormValues
-	>({
+	const form = useForm<CreateListFormInput, unknown, CreateListFormValues>({
 		resolver: zodResolver(createListFormSchema),
 		defaultValues: {
 			name: "",
@@ -26,19 +25,25 @@ export function useCreateListScreen() {
 		mode: "onChange",
 	});
 
-	const { control, handleSubmit, formState } = form;
+	const { control, handleSubmit, formState, reset } = form;
 	const { isValid } = formState;
 
 	const clearCreateError = useCallback(() => {
 		setCreateError(null);
 	}, []);
 
+	const resetForm = useCallback(() => {
+		reset({ name: "", type: undefined });
+		setCreateError(null);
+	}, [reset]);
+
 	const createList = useCallback(
 		async (values: CreateListFormValues) => {
 			setCreateError(null);
 			try {
 				await mutateAsync({ name: values.name, type: values.type });
-				router.back();
+				resetForm();
+				onCreated();
 			} catch (err) {
 				const message =
 					err instanceof Error
@@ -47,7 +52,7 @@ export function useCreateListScreen() {
 				setCreateError(message);
 			}
 		},
-		[mutateAsync],
+		[mutateAsync, onCreated, resetForm],
 	);
 
 	const onSubmit = handleSubmit(createList);
@@ -60,7 +65,8 @@ export function useCreateListScreen() {
 		isCreating,
 		onSubmit,
 		clearCreateError,
+		resetForm,
 	};
 }
 
-export type CreateListScreenModel = ReturnType<typeof useCreateListScreen>;
+export type CreateListModel = ReturnType<typeof useCreateList>;

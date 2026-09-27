@@ -20,7 +20,6 @@ export default function SettingsScreen() {
 			/>
 			<BodyScrollView>
 				<View className="flex-1 items-center justify-center gap-6 p-6">
-					<Text className="text-xl">Settings</Text>
 					<Button variant="outline" onPress={() => void signOut()}>
 						<Text>Sign out</Text>
 					</Button>

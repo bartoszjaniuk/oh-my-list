@@ -13,16 +13,22 @@ import { THEME } from "@/lib/theme";
 
 const FAB_SIZE = 56;
 /** Approximate native tab bar height so the FAB sits above it. */
-const TAB_BAR_OFFSET = 64;
+const TAB_BAR_OFFSET = 36;
 
 type FloatingButtonProps = {
 	onPress?: () => void;
 	accessibilityLabel?: string;
+	/**
+	 * Extra lift above the safe-area bottom.
+	 * Defaults to tab-bar clearance for home; pass `0` on stack screens without a tab bar.
+	 */
+	bottomExtra?: number;
 };
 
 export function FloatingButton({
 	onPress,
 	accessibilityLabel = "Dodaj",
+	bottomExtra = TAB_BAR_OFFSET,
 }: FloatingButtonProps) {
 	const insets = useSafeAreaInsets();
 	const { colorScheme } = useColorScheme();
@@ -35,7 +41,7 @@ export function FloatingButton({
 			pointerEvents="box-none"
 			className="absolute right-4 z-50"
 			style={{
-				bottom: TAB_BAR_OFFSET + Math.max(insets.bottom, 8),
+				bottom: bottomExtra + Math.max(insets.bottom, 8),
 			}}
 		>
 			<Pressable

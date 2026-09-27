@@ -1,6 +1,7 @@
 import { useListsQuery } from "@/api/lists/hooks/useListsQuery";
 import { useListsRealtime } from "@/api/lists/hooks/useListsRealtime";
 import type { ListScope } from "@/api/lists/lists.models";
+import { router } from "expo-router";
 import { useCallback, useState } from "react";
 
 export function useListsScreen() {
@@ -14,8 +15,8 @@ export function useListsScreen() {
 	const lists = data?.data ?? [];
 	const isRefreshing = isFetching && !isLoading;
 
-	const onOpenList = useCallback((_listId: string) => {
-		// List details are out of scope for this slice.
+	const onOpenList = useCallback((listId: string) => {
+		router.push(`/list/${listId}`);
 	}, []);
 
 	return {
