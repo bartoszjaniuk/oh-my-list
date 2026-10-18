@@ -9,7 +9,7 @@ import {
 } from "../createList.schema";
 
 type UseCreateListOptions = {
-	onCreated: () => void;
+	onCreated: (listId: string) => void;
 };
 
 export function useCreateList({ onCreated }: UseCreateListOptions) {
@@ -41,9 +41,12 @@ export function useCreateList({ onCreated }: UseCreateListOptions) {
 		async (values: CreateListFormValues) => {
 			setCreateError(null);
 			try {
-				await mutateAsync({ name: values.name, type: values.type });
+				const created = await mutateAsync({
+					name: values.name,
+					type: values.type,
+				});
 				resetForm();
-				onCreated();
+				onCreated(created.id);
 			} catch (err) {
 				const message =
 					err instanceof Error

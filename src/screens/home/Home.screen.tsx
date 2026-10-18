@@ -2,8 +2,11 @@ import type { ListSummary } from "@/api/lists/lists.models";
 import { FloatingButton } from "@/components/floating-button";
 import { IconButton } from "@/components/ui/icon-button";
 import { Text } from "@/components/ui/text";
+import { CreateListFormSheet } from "@/screens/create-list/components/CreateListFormSheet";
+import { CreateListSheet } from "@/screens/create-list/components/CreateListSheet";
 import { router } from "expo-router";
 import { Settings } from "lucide-react-native";
+import { useState } from "react";
 import { FlatList, RefreshControl, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ListCard } from "./components/ListCard";
@@ -38,6 +41,9 @@ export const HomeScreen = () => {
 		refetch,
 		onOpenList,
 	} = useListsScreen();
+	const [isCreateSheetVisible, setIsCreateSheetVisible] = useState(false);
+	const [isCreateFormSheetVisible, setIsCreateFormSheetVisible] =
+		useState(false);
 
 	const keyExtractor = (item: ListSummary) => item.id;
 
@@ -45,6 +51,16 @@ export const HomeScreen = () => {
 		<ListCard item={item} onOpenList={onOpenList} />
 	);
 	const isEmpty = lists.length === 0;
+
+	const handleOpenCreateForm = () => {
+		setIsCreateSheetVisible(false);
+		setIsCreateFormSheetVisible(true);
+	};
+
+	const handleListCreated = (listId: string) => {
+		setIsCreateFormSheetVisible(false);
+		router.push(`/list/${listId}`);
+	};
 
 	return (
 		<SafeAreaView className="flex-1 bg-background" edges={["top"]}>
@@ -69,7 +85,20 @@ export const HomeScreen = () => {
 				}
 				contentContainerClassName={isEmpty ? "flex-grow" : "pb-28"}
 			/>
-			<FloatingButton accessibilityLabel="Utwórz listę" />
+			<FloatingButton
+				accessibilityLabel="Utwórz listę"
+				onPress={() => setIsCreateSheetVisible(true)}
+			/>
+			<CreateListSheet
+				visible={isCreateSheetVisible}
+				onClose={() => setIsCreateSheetVisible(false)}
+				onCreateNew={handleOpenCreateForm}
+			/>
+			<CreateListFormSheet
+				visible={isCreateFormSheetVisible}
+				onClose={() => setIsCreateFormSheetVisible(false)}
+				onCreated={handleListCreated}
+			/>
 		</SafeAreaView>
 	);
 };

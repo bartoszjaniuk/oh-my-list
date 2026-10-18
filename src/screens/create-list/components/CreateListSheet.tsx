@@ -1,146 +1,100 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 import { Text } from "@/components/ui/text";
 import { useControlledBottomSheetModal } from "@/hooks/useControlledBottomSheetModal";
 import {
 	BottomSheetModal,
-	BottomSheetView,
+	BottomSheetScrollView,
 } from "@expo/ui/community/bottom-sheet";
-import { Controller } from "react-hook-form";
+import { useState } from "react";
 import { View } from "react-native";
-import { LIST_TYPE_OPTIONS } from "../consts";
-import { useCreateList } from "../hooks/useCreateList";
-import { ListTypeSelectRow } from "./ListTypeSelectRow";
 
 type CreateListSheetProps = {
 	visible: boolean;
 	onClose: () => void;
+	onCreateNew: () => void;
 };
 
-export function CreateListSheet({ visible, onClose }: CreateListSheetProps) {
+export function CreateListSheet({
+	visible,
+	onClose,
+	onCreateNew,
+}: CreateListSheetProps) {
 	const sheetRef = useControlledBottomSheetModal(visible);
-	const {
-		control,
-		canSubmit,
-		createError,
-		isCreating,
-		onSubmit,
-		clearCreateError,
-		resetForm,
-	} = useCreateList({
-		onCreated: onClose,
-	});
+	const [joinCode, setJoinCode] = useState("");
 
 	const handleClose = () => {
-		if (isCreating) return;
-		resetForm();
+		setJoinCode("");
 		onClose();
 	};
 
 	return (
 		<BottomSheetModal
 			ref={sheetRef}
-			enablePanDownToClose={!isCreating}
+			enablePanDownToClose
 			enableDynamicSizing
-			onClose={() => {
-				if (!isCreating) {
-					resetForm();
-					onClose();
-				}
-			}}
+			onClose={handleClose}
 		>
-			<BottomSheetView
-				style={{ paddingHorizontal: 24, paddingBottom: 40, paddingTop: 8 }}
+			<BottomSheetScrollView
+				contentContainerStyle={{
+					paddingHorizontal: 24,
+					paddingBottom: 40,
+					paddingTop: 8,
+				}}
 			>
 				<Text variant="large" className="mb-4">
 					Nowa lista
 				</Text>
-				<View className="gap-4">
-					<Controller
-						control={control}
-						name="name"
-						render={({
-							field: { onChange, onBlur, value },
-							fieldState: { error },
-						}) => (
-							<View className="gap-2">
-								<Text className="text-base font-semibold text-foreground">
-									Nazwa
-								</Text>
-								<Input
-									value={value}
-									onBlur={onBlur}
-									onChangeText={(text) => {
-										onChange(text);
-										clearCreateError();
-									}}
-									placeholder="np. Zakupy na weekend"
-									editable={!isCreating}
-									autoCapitalize="sentences"
-									returnKeyType="done"
-									aria-invalid={error != null}
-								/>
-								{error?.message ? (
-									<Text className="text-sm text-destructive">
-										{error.message}
-									</Text>
-								) : null}
-							</View>
-						)}
-					/>
+				<View className="gap-5">
+					<Button
+						onPress={onCreateNew}
+						accessibilityLabel="Utwórz nową listę"
+					>
+						<Text>Utwórz nową listę</Text>
+					</Button>
 
-					<Controller
-						control={control}
-						name="type"
-						render={({
-							field: { onChange, value },
-							fieldState: { error },
-						}) => (
-							<View className="gap-2">
-								<Text className="text-base font-semibold text-foreground">
-									Typ
-								</Text>
-								<View className="gap-2">
-									{LIST_TYPE_OPTIONS.map((option) => (
-										<ListTypeSelectRow
-											key={option.id}
-											option={option}
-											selected={value === option.id}
-											disabled={isCreating}
-											onSelect={() => {
-												onChange(option.id);
-												clearCreateError();
-											}}
-										/>
-									))}
-								</View>
-								{error?.message ? (
-									<Text className="text-sm text-destructive">
-										{error.message}
-									</Text>
-								) : null}
-							</View>
-						)}
-					/>
+					<View className="flex-row items-center">
+						<Separator className="flex-1" />
+						<Text className="px-3 text-sm text-muted-foreground">
+							lub dołącz do istniejącej
+						</Text>
+						<Separator className="flex-1" />
+					</View>
 
-					{createError != null ? (
-						<View className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2">
-							<Text className="text-sm text-destructive">{createError}</Text>
-						</View>
-					) : null}
+					<Input
+						value={joinCode}
+						onChangeText={setJoinCode}
+						placeholder="wprowadź kod"
+						autoCapitalize="characters"
+						autoCorrect={false}
+						accessibilityLabel="Kod zaproszenia do listy"
+					/>
 
 					<Button
-						disabled={!canSubmit}
-						onPress={onSubmit}
-						accessibilityLabel="Utwórz listę"
+						onPress={() => {
+							// TODO: redeem invitation / join list
+						}}
+						accessibilityLabel="Dołącz do listy"
 					>
-						<Text>{isCreating ? "Tworzenie…" : "Utwórz listę"}</Text>
+						<Text>Dołącz do listy</Text>
 					</Button>
-					<Button variant="ghost" disabled={isCreating} onPress={handleClose}>
-						<Text>Anuluj</Text>
+
+					<Button
+						variant="outline"
+						onPress={() => {
+							// TODO: open QR scanner
+						}}
+						accessibilityLabel="Zeskanuj kod QR"
+					>
+						<Text>Zeskanuj kod QR</Text>
+					</Button>
+
+					<Button variant="ghost" onPress={handleClose}>
+						<Text>Zamknij</Text>
 					</Button>
 				</View>
-			</BottomSheetView>
+			</BottomSheetScrollView>
 		</BottomSheetModal>
 	);
 }
