@@ -2,10 +2,8 @@ import type { ListSummary } from "@/api/lists/lists.models";
 import { FloatingButton } from "@/components/floating-button";
 import { IconButton } from "@/components/ui/icon-button";
 import { Text } from "@/components/ui/text";
-import { CreateListSheet } from "@/screens/create-list/components/CreateListSheet";
 import { router } from "expo-router";
 import { Settings } from "lucide-react-native";
-import { useState } from "react";
 import { FlatList, RefreshControl, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ListCard } from "./components/ListCard";
@@ -29,7 +27,6 @@ function Header() {
 }
 
 export const HomeScreen = () => {
-	const [createSheetVisible, setCreateSheetVisible] = useState(false);
 	const {
 		segment,
 		setSegment,
@@ -47,7 +44,6 @@ export const HomeScreen = () => {
 	const renderItem = ({ item }: { item: ListSummary }) => (
 		<ListCard item={item} onOpenList={onOpenList} />
 	);
-	// #E6EBFB
 	const isEmpty = lists.length === 0;
 
 	return (
@@ -73,14 +69,7 @@ export const HomeScreen = () => {
 				}
 				contentContainerClassName={isEmpty ? "flex-grow" : "pb-28"}
 			/>
-			<FloatingButton
-				accessibilityLabel="Utwórz listę"
-				onPress={() => setCreateSheetVisible(true)}
-			/>
-			<CreateListSheet
-				visible={createSheetVisible}
-				onClose={() => setCreateSheetVisible(false)}
-			/>
+			<FloatingButton accessibilityLabel="Utwórz listę" />
 		</SafeAreaView>
 	);
 };

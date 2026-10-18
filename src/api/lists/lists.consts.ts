@@ -2,7 +2,7 @@ export const DEFAULT_LIMIT = 50;
 export const DEFAULT_OFFSET = 0;
 
 /** Zgodne z `INVITE_DEEP_LINK_PREFIX` w Edge; musi kończyć się na `/`. */
-const DEFAULT_INVITE_DEEP_LINK_PREFIX = "listastic://invite/";
+const DEFAULT_INVITE_DEEP_LINK_PREFIX = "ohmylist://invite/";
 
 const normalizeInvitePrefix = (raw: string) =>
 	raw.endsWith("/") ? raw : `${raw}/`;

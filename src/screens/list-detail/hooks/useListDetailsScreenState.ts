@@ -32,6 +32,7 @@ export function useListDetailsScreenState(listId?: string) {
 	}, [refetchDetails, refetchItems]);
 
 	return {
+		detailsQuery,
 		list: detailsQuery.data,
 		isLoading: detailsQuery.isLoading,
 		isError: detailsQuery.isError,

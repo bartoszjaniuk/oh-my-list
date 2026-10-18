@@ -19,6 +19,7 @@ import {
 	PatchListItemCheckResponse,
 	PatchListNameInput,
 } from "./lists.models";
+import { buildInviteLink } from "./lists.consts";
 import { normalizeGetListsParams } from "./lists.utils";
 
 const getListsBaseUrl = (): string => {
@@ -527,7 +528,11 @@ export const createListInvitation = async (
 
 	const rawBody = (await response.json()) as
 		CreateListInvitationResponse | ErrorResponse;
-	return rawBody as CreateListInvitationResponse;
+	const data = rawBody as CreateListInvitationResponse;
+	return {
+		...data,
+		invite_link: buildInviteLink(data.code),
+	};
 };
 
 /**

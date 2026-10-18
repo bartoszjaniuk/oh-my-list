@@ -36,7 +36,10 @@ export function ListItemsSectionList({
 
 	const renderSectionHeader = ({ section }: { section: ItemSection }) => (
 		<View className="pb-2 pt-5">
-			<Text variant="small" className="uppercase tracking-wide text-muted-foreground">
+			<Text
+				variant="small"
+				className="uppercase tracking-wide text-muted-foreground"
+			>
 				{section.title}
 			</Text>
 		</View>
@@ -84,7 +87,7 @@ export function ListItemsSectionList({
 			renderItem={renderItem}
 			ListHeaderComponent={listHeaderComponent}
 			stickySectionHeadersEnabled={false}
-			contentContainerClassName="px-5 pb-36"
+			contentContainerClassName="px-4 pb-36"
 			refreshControl={
 				<RefreshControl refreshing={isPullRefreshing} onRefresh={onRefresh} />
 			}

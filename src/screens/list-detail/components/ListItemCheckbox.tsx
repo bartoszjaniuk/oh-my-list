@@ -24,7 +24,7 @@ export function ListItemCheckbox({
 			disabled={disabled}
 			hitSlop={8}
 			onPress={() => onCheckedChange(!checked)}
-			className={cn("min-h-[44px] min-w-[44px] items-center justify-center", disabled && "opacity-50")}
+			className={cn("justify-center", disabled && "opacity-50")}
 		>
 			<View
 				className={cn(
